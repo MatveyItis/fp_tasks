@@ -1,11 +1,14 @@
 module Part3 where
 
+import Data.Char
+
 ------------------------------------------------------------
 -- PROBLEM #18
 --
 -- Проверить, является ли число N простым (1 <= N <= 10^9)
 prob18 :: Integer -> Bool
-prob18 = error "Implement me!"
+prob18 1 = False
+prob18 x = and [x `mod` y /= 0 | y <- [2 .. (x -1)]]
 
 ------------------------------------------------------------
 -- PROBLEM #19
@@ -23,7 +26,11 @@ prob19 = error "Implement me!"
 -- Совершенное число равно сумме своих делителей (меньших
 -- самого числа)
 prob20 :: Integer -> Bool
-prob20 = error "Implement me!"
+prob20 n = sum (divisors n) == n
+
+-- получение списка делителей числа(исключая само число)
+divisors :: Integral a => a -> [a]
+divisors n = [x | x <- [1 .. (n - 1)], rem n x == 0]
 
 ------------------------------------------------------------
 -- PROBLEM #21
@@ -31,7 +38,7 @@ prob20 = error "Implement me!"
 -- Вернуть список всех делителей числа N (1<=N<=10^10) в
 -- порядке возрастания
 prob21 :: Integer -> [Integer]
-prob21 = error "Implement me!"
+prob21 n = [x | x <- [1 .. (n)], rem n x == 0]
 
 ------------------------------------------------------------
 -- PROBLEM #22
@@ -59,7 +66,15 @@ prob23 = error "Implement me!"
 -- представить как сумму чисел от 1 до какого-то K
 -- (1 <= N <= 10^10)
 prob24 :: Integer -> Bool
-prob24 = error "Implement me!"
+prob24 x = x `elem` triSeries x
+
+-- генерация треугольного числа
+triangular :: Integer -> Integer
+triangular x = x * (x + 1) `div` 2
+
+-- генерация списка треугольного числа
+triSeries :: Integer -> [Integer]
+triSeries x = map triangular [1..x]
 
 ------------------------------------------------------------
 -- PROBLEM #25
@@ -117,7 +132,13 @@ prob30 = error "Implement me!"
 -- Найти сумму всех пар различных дружественных чисел,
 -- меньших заданного N (1 <= N <= 10000)
 prob31 :: Int -> Int
-prob31 = error "Implement me!"
+prob31 = error ""
+
+-- получение пар дружественных чисел
+friends :: Int -> [(Int, Int)]
+friends x = [(m, n) | m <- [1..x], n <- [1..(x - 1)],
+                   sum (divisors m) == n,
+                   sum (divisors n) == m]
 
 ------------------------------------------------------------
 -- PROBLEM #32

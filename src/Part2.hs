@@ -8,7 +8,9 @@ import Part2.Types
 -- Написать функцию, которая преобразует значение типа
 -- ColorLetter в символ, равный первой букве значения
 prob6 :: ColorLetter -> Char
-prob6 = error "Implement me!"
+prob6 RED = 'R'
+prob6 GREEN = 'G'
+prob6 BLUE = 'B'
 
 ------------------------------------------------------------
 -- PROBLEM #7
@@ -16,7 +18,10 @@ prob6 = error "Implement me!"
 -- Написать функцию, которая проверяет, что значения
 -- находятся в диапазоне от 0 до 255 (границы входят)
 prob7 :: ColorPart -> Bool
-prob7 = error "Implement me!"
+prob7 c = case c of
+  Red x -> x >= 0 && x < 255
+  Green x -> x >= 0 && x < 255
+  Blue x -> x >= 0 && x < 255
 
 ------------------------------------------------------------
 -- PROBLEM #8
@@ -24,7 +29,10 @@ prob7 = error "Implement me!"
 -- Написать функцию, которая добавляет в соответствующее
 -- поле значения Color значение из ColorPart
 prob8 :: Color -> ColorPart -> Color
-prob8 = error "Implement me!"
+prob8 c p = case p of
+  Red x -> c {red = red c + x}
+  Green x -> c {green = green c + x}
+  Blue x -> c {blue = blue c + x}
 
 ------------------------------------------------------------
 -- PROBLEM #9
@@ -32,7 +40,10 @@ prob8 = error "Implement me!"
 -- Написать функцию, которая возвращает значение из
 -- ColorPart
 prob9 :: ColorPart -> Int
-prob9 = error "Implement me!"
+prob9 c = case c of
+  Red x -> x
+  Green x -> x
+  Blue x -> x
 
 ------------------------------------------------------------
 -- PROBLEM #10
@@ -40,7 +51,19 @@ prob9 = error "Implement me!"
 -- Написать функцию, которая возвращает компонент Color, у
 -- которого наибольшее значение (если такой единственный)
 prob10 :: Color -> Maybe ColorPart
-prob10 = error "Implement me!"
+prob10 c = do
+  let r = red c
+  let g = green c
+  let b = blue c
+  if r > g && r > b
+    then Just (Red r)
+    else
+      if g > b && g > r
+        then Just (Green g)
+        else
+          if b > g && b > r
+            then Just (Blue b)
+            else Nothing
 
 ------------------------------------------------------------
 -- PROBLEM #11

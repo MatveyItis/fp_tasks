@@ -1,10 +1,11 @@
 module Part1
-  ( prob1
-  , prob2
-  , prob3
-  , prob4
-  , prob5
-  ) where
+  ( prob1,
+    prob2,
+    prob3,
+    prob4,
+    prob5,
+  )
+where
 
 ------------------------------------------------------------
 -- PROBLEM #1
@@ -15,18 +16,19 @@ module Part1
 --
 -- На вход функции подаются неотрицательные числа
 prob1 :: Int -> Int
-prob1 x = error "Implement me!"
-
+prob1 x = mod ((x * 3) + 123) 65537
 
 ------------------------------------------------------------
 -- PROBLEM #2
 --
 -- Реализовать функцию, которая:
--- * нечётные числа увеличивает втрое и добавляет единицу
--- * чётные числа делит на два
-prob2 :: Integer -> Integer
-prob2 n = error "Implement me!"
 
+-- * нечётные числа увеличивает втрое и добавляет единицу
+
+-- * чётные числа делит на два
+
+prob2 :: Integer -> Integer
+prob2 n = if mod n 2 == 0 then div n 2 else n * 3 + 1
 
 ------------------------------------------------------------
 -- PROBLEM #3
@@ -52,7 +54,6 @@ prob2 n = error "Implement me!"
 prob3 :: (Integer -> Integer) -> Integer -> Integer
 prob3 step n = error "Implement me!"
 
-
 ------------------------------------------------------------
 -- PROBLEM #4
 --
@@ -68,8 +69,11 @@ prob3 step n = error "Implement me!"
 --
 -- Число n по модулю не превосходит 10^5
 prob4 :: Integer -> Integer
-prob4 n = error "Implement me!"
-
+prob4 (-2) = 1
+prob4 (-1) = 0
+prob4 0 = 1
+prob4 1 = 1
+prob4 n = if n > 0 then prob4 (n - 1) + prob4 (n - 2) else prob4 (n + 2) - prob4 (n + 1)
 
 ------------------------------------------------------------
 -- PROBLEM #5
@@ -80,4 +84,8 @@ prob4 n = error "Implement me!"
 -- Числа n и k положительны и не превосходят 10^8.
 -- Число 1 не считается простым числом
 prob5 :: Integer -> Integer -> Bool
-prob5 = error "Implement me!"
+prob5 = error ""
+
+prime :: (Integral a) => a -> Bool
+prime 1 = False
+prime x = and [ x `mod` y /= 0 | y <- [2..(x-1)] ]
