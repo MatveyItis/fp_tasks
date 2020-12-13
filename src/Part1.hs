@@ -28,7 +28,7 @@ prob1 x = mod ((x * 3) + 123) 65537
 -- * чётные числа делит на два
 
 prob2 :: Integer -> Integer
-prob2 n = if mod n 2 == 0 then div n 2 else n * 3 + 1
+prob2 n = if even n then div n 2 else n * 3 + 1
 
 ------------------------------------------------------------
 -- PROBLEM #3
@@ -52,7 +52,11 @@ prob2 n = if mod n 2 == 0 then div n 2 else n * 3 + 1
 --
 -- Для любой функции step и n == 1 ответом будет 0.
 prob3 :: (Integer -> Integer) -> Integer -> Integer
-prob3 step n = error "Implement me!"
+prob3 step n = recursive n 0
+  where
+    recursive :: Integer -> Integer -> Integer
+    recursive 1 i = i
+    recursive n i = recursive (step n) (i+1)
 
 ------------------------------------------------------------
 -- PROBLEM #4
@@ -84,7 +88,7 @@ prob4 n = if n > 0 then prob4 (n - 1) + prob4 (n - 2) else prob4 (n + 2) - prob4
 -- Числа n и k положительны и не превосходят 10^8.
 -- Число 1 не считается простым числом
 prob5 :: Integer -> Integer -> Bool
-prob5 = error ""
+prob5 n k = last ([p | p <- [2 .. n], n `mod` p == 0, [d | d <- [1 .. p], p `mod` d == 0] == [1, p]]) < k
 
 prime :: (Integral a) => a -> Bool
 prime 1 = False
