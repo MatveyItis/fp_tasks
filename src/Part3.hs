@@ -1,6 +1,7 @@
 module Part3 where
 
 import Data.Char
+import Data.String
 
 ------------------------------------------------------------
 -- PROBLEM #18
@@ -149,3 +150,13 @@ friends x = [(m, n) | m <- [1..x], n <- [1..(x - 1)],
 -- Сумма не превосходит 100
 prob32 :: [Int] -> Int -> [[Int]]
 prob32 = error "Implement me!"
+
+
+coins ::(Ord a, Num a) => [a]
+coins = [5,9,13]
+
+
+change :: (Ord a, Num a) => a -> [[a]]
+change 0 = [[]]
+change amount = [ c:cs |c<-coins, amount>=c, cs<-change (amount - c) ]
+

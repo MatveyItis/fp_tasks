@@ -70,7 +70,13 @@ prob10 c = do
 --
 -- Найти сумму элементов дерева
 prob11 :: Num a => Tree a -> a
-prob11 = error "Implement me!"
+prob11 t = sum (convertToList t)
+
+convertToList :: Tree a -> [a]
+convertToList tree = [root tree] ++ maybeConvert (left tree) ++ maybeConvert (right tree)
+  where
+    maybeConvert (Just x) = convertToList x
+    maybeConvert Nothing = []
 
 ------------------------------------------------------------
 -- PROBLEM #12
@@ -81,7 +87,19 @@ prob11 = error "Implement me!"
 -- а все элементы правого поддерева -- не меньше элемента
 -- в узле)
 prob12 :: Ord a => Tree a -> Bool
-prob12 = error "Implement me!"
+prob12 = checkTree
+
+checkTree :: Ord a => Tree a -> Bool
+checkTree tree = checkLeft (left tree) (root tree) && checkRight (right tree) (root tree)
+
+checkRight :: Ord a => Maybe (Tree a) -> a -> Bool
+checkRight Nothing x = True
+checkRight (Just tree) parent = root tree >= parent && checkTree tree
+
+checkLeft :: Ord a => Maybe (Tree a) -> a -> Bool
+checkLeft Nothing x = True
+checkLeft (Just tree) parent = root tree < parent && checkTree tree
+
 
 ------------------------------------------------------------
 -- PROBLEM #13
