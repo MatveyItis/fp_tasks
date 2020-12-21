@@ -108,7 +108,15 @@ checkLeft (Just tree) parent = root tree < parent && checkTree tree
 -- поддерево, в корне которого находится значение, если оно
 -- есть в дереве поиска; если его нет - вернуть Nothing
 prob13 :: Ord a => a -> Tree a -> Maybe (Tree a)
-prob13 = error "Implement me!"
+prob13 a tree = findTree a (Just tree)
+
+-- метод для поиска поддерева
+findTree :: Ord a => a -> Maybe (Tree a) -> Maybe (Tree a)
+findTree a Nothing = Nothing
+findTree a (Just tree)
+  | a > root tree = findTree a (right tree)
+  | a < root tree = findTree a (left tree)
+  | otherwise = Just tree
 
 ------------------------------------------------------------
 -- PROBLEM #14
