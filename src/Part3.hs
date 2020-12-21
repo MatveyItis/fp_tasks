@@ -92,7 +92,7 @@ prob25 = error "Implement me!"
 -- сумма делителей одного (без учёта самого числа) равна
 -- другому, и наоборот
 prob26 :: Integer -> Integer -> Bool
-prob26 = error "Implement me!"
+prob26 x y = (x, y) `elem` friends2 (x + y)
 
 ------------------------------------------------------------
 -- PROBLEM #27
@@ -100,8 +100,43 @@ prob26 = error "Implement me!"
 -- Найти в списке два числа, сумма которых равна заданному.
 -- Длина списка не превосходит 500
 prob27 :: Int -> [Int] -> Maybe (Int, Int)
-prob27 = error "Implement me!"
+prob27 = prob222
+{-case arr of
+  [] -> Nothing
+  x -> checkIfExists currNum n x
+    where 
+      currNum = head x
+      checkIfExists :: Int -> Int -> [Int] -> Maybe (Int, Int)
+      checkIfExists currNum n x = case x of
+        [] -> Nothing
+        [a] -> Nothing 
+        a -> if (currNum + head (tail a)) == n 
+             then Just (currNum, head (tail a)) 
+             else checkIfExists currNum n (tail a)-}
+-- todo doesn't work
+prob222 :: Int -> [Int] -> Maybe (Int, Int)
+prob222 n arr = case arr of
+  [] -> Nothing
+  [a] -> Nothing
+  a ->  checkFirst (head a) n a
+          where 
+            checkFirst :: Int -> Int -> [Int] -> Maybe (Int, Int)
+            checkFirst curr n a = case a of
+              [] -> Nothing
+              [o] -> if curr + o == n 
+                     then Just (curr, o) 
+                     else checkSecond (head (tail a)) n (tail a)
+                       where 
+                         checkSecond :: Int -> Int -> [Int] -> Maybe (Int, Int)
+                         checkSecond curr2 n a = 
+                            if (curr2 + head (tail a)) == n 
+                            then Just (curr2, head (tail a))
+                            else Nothing
+              o -> if curr + head (tail o) == n 
+                   then Just (curr, head (tail o)) 
+                   else Nothing   
 
+       
 ------------------------------------------------------------
 -- PROBLEM #28
 --
@@ -138,6 +173,12 @@ prob31 n = sum (map sumCouple (friends n))
 -- получение пар дружественных чисел
 friends :: Int -> [(Int, Int)]
 friends x = [(m, n) | m <- [1..x], n <- [1..(m - 1)],
+            sum (divisors m) == n,
+            sum (divisors n) == m]
+            
+-- получение пар дружественных чисел
+friends2 :: Integer -> [(Integer, Integer)]
+friends2 x = [(m, n) | m <- [1..x], n <- [1..(x - 1)],
             sum (divisors m) == n,
             sum (divisors n) == m]
 
