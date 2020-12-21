@@ -133,13 +133,16 @@ prob30 = error "Implement me!"
 -- Найти сумму всех пар различных дружественных чисел,
 -- меньших заданного N (1 <= N <= 10000)
 prob31 :: Int -> Int
-prob31 = error ""
+prob31 n = sum (map sumCouple (friends n))
 
 -- получение пар дружественных чисел
 friends :: Int -> [(Int, Int)]
-friends x = [(m, n) | m <- [1..x], n <- [1..(x - 1)],
-                   sum (divisors m) == n,
-                   sum (divisors n) == m]
+friends x = [(m, n) | m <- [1..x], n <- [1..(m - 1)],
+            sum (divisors m) == n,
+            sum (divisors n) == m]
+
+sumCouple :: (Int, Int) -> Int
+sumCouple (x, y) = x + y                
 
 ------------------------------------------------------------
 -- PROBLEM #32
