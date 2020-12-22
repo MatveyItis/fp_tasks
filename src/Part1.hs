@@ -75,11 +75,14 @@ prob3 step n = recursive n 0
 --
 -- Число n по модулю не превосходит 10^5
 prob4 :: Integer -> Integer
-prob4 (-2) = 1
-prob4 (-1) = 0
-prob4 0 = 1
-prob4 1 = 1
-prob4 n = if n > 0 then prob4 (n - 1) + prob4 (n - 2) else prob4 (n + 2) - prob4 (n + 1)
+prob4 n
+  | n == (-1) = 0
+  | n < 0 = prob4 (-n - 2) * (if even n then 1 else -1)
+  | otherwise = iter n 0 1
+  
+iter :: Integer -> Integer -> Integer -> Integer
+iter 0 a b = b
+iter i a b = iter (i - 1) b (a + b)
 
 ------------------------------------------------------------
 -- PROBLEM #5
@@ -90,8 +93,11 @@ prob4 n = if n > 0 then prob4 (n - 1) + prob4 (n - 2) else prob4 (n + 2) - prob4
 -- Числа n и k положительны и не превосходят 10^8.
 -- Число 1 не считается простым числом
 prob5 :: Integer -> Integer -> Bool
-prob5 n k = last ([p | p <- [2 .. n], n `mod` p == 0, [d | d <- [1 .. p], p `mod` d == 0] == [1, p]]) < k
+prob5 n k = all (<k) (filter isPrime (divisors n))
 
-prime :: (Integral a) => a -> Bool
-prime 1 = False
-prime x = and [ x `mod` y /= 0 | y <- [2..(x-1)] ]
+isPrime :: (Integral a) => a -> Bool
+isPrime 1 = False
+isPrime x = and [ x `mod` y /= 0 | y <- [2..(x-1)] ]
+
+divisors :: Integral a => a -> [a]
+divisors n = [x | x <- [1 .. n], rem n x == 0]
