@@ -115,19 +115,16 @@ prob26 x y = sum (divisors x) == y && sum (divisors y) == x
 -- Найти в списке два числа, сумма которых равна заданному.
 -- Длина списка не превосходит 500
 prob27 :: Int -> [Int] -> Maybe (Int, Int)
-prob27 = prob222
-{-case arr of
-  [] -> Nothing
-  x -> checkIfExists currNum n x
-    where
-      currNum = head x
-      checkIfExists :: Int -> Int -> [Int] -> Maybe (Int, Int)
-      checkIfExists currNum n x = case x of
-        [] -> Nothing
-        [a] -> Nothing
-        a -> if (currNum + head (tail a)) == n
-             then Just (currNum, head (tail a))
-             else checkIfExists currNum n (tail a)-}
+prob27 x [] = Nothing
+prob27 sum (x:xs) = case findComplement sum x xs of
+    Nothing -> prob27 sum xs
+    (Just compl) -> Just (x, compl)
+  where
+    findComplement _ _ [] = Nothing
+    findComplement sum item (x:xs)
+      | item + x == sum = Just x
+      | otherwise = findComplement sum item xs
+
 -- todo doesn't work
 prob222 :: Int -> [Int] -> Maybe (Int, Int)
 prob222 n arr = case arr of
