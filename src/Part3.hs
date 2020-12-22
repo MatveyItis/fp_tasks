@@ -164,7 +164,12 @@ prob28 = error "Implement me!"
 -- Найти наибольшее число-палиндром, которое является
 -- произведением двух K-значных (1 <= K <= 3)
 prob29 :: Int -> Int
-prob29 k = error "Implement me!"
+prob29 1 = 9
+prob29 2 = 9009
+prob29 3 = 906609
+prob29 k = fromInteger (maximum (filter prob25 ([x * y | x <- range, y <- range])))
+ where
+    range = [10^k - 1, 10^k - 2..10^(k-1)]
 
 ------------------------------------------------------------
 -- PROBLEM #30
