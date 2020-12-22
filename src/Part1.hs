@@ -1,3 +1,5 @@
+{-# LANGUAGE BangPatterns #-}
+
 module Part1
   ( prob1,
     prob2,
