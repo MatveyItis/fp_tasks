@@ -80,8 +80,8 @@ triangular :: Integer -> Integer
 triangular x = x * (x + 1) `div` 2
 
 -- генерация списка треугольного числа
-triSeries :: Integer -> [Integer]
-triSeries x = map triangular [1..x]
+triSeries :: [Integer]
+triSeries = map triangular [1..]
 
 ------------------------------------------------------------
 -- PROBLEM #25
@@ -177,7 +177,11 @@ prob29 k = fromInteger (maximum (filter prob25 ([x * y | x <- range, y <- range]
 -- Найти наименьшее треугольное число, у которого не меньше
 -- заданного количества делителей
 prob30 :: Int -> Integer
-prob30 = error "Implement me!"
+prob30 k = head (filter (\t -> length (divisors2 t) >= k) triSeries)
+
+-- получение списка делителей числа(исключая само число)
+divisors2 :: Integral a => a -> [a]
+divisors2 n = [x | x <- [1 .. n], rem n x == 0]
 
 ------------------------------------------------------------
 -- PROBLEM #31
