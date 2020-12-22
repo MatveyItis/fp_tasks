@@ -3,13 +3,21 @@ module Part3 where
 import Data.Char
 import Data.String
 
+primes :: [Integer]
+primes = 2 : filter isPrime [3, 5 ..]
+
+isPrime :: Integer -> Bool
+isPrime 1 = False
+isPrime 2 = True
+isPrime n = all (\p -> n `mod` p /= 0) (takeWhile (\p -> p * p <= n) primes)
+
 ------------------------------------------------------------
 -- PROBLEM #18
 --
 -- Проверить, является ли число N простым (1 <= N <= 10^9)
 prob18 :: Integer -> Bool
 prob18 1 = False
-prob18 x = and [x `mod` y /= 0 | y <- [2 .. (x-1)]]
+prob18 x = isPrime x
 
 ------------------------------------------------------------
 -- PROBLEM #19
