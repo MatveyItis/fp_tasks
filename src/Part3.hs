@@ -55,11 +55,10 @@ prob21 n = [x | x <- [1 .. n], rem n x == 0]
 -- Подсчитать произведение количеств букв i в словах из
 -- заданной строки (списка символов)
 prob22 :: String -> Integer
-prob22 "" = 0
-prob22 text = product (map (max 1 . count 'i') (words text))
+prob22 str = product $ map count (words str)
 
-count :: Eq a => a -> [a] -> Integer
-count item = fromIntegral . length . filter (== item)
+count :: String -> Integer
+count xs = toInteger (length (filter (== 'i') xs))
 
 ------------------------------------------------------------
 -- PROBLEM #23
